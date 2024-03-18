@@ -1,38 +1,58 @@
-import { Component } from "react";
+import React, { Component } from "react";
 import SingleBook from "./SingleBook";
-import { Col, Form, Row } from "react-bootstrap";
+import { Col, Container, Form, Row } from "react-bootstrap";
+import CommentArea from "./CommentArea";
 
 class BookList extends Component {
   state = {
     searchQuery: "",
+    selectedBookAsin: null,
   };
 
-  // Fai un refactor della struttura del tuo componente BookList: dovranno esserci due colonne. Una a sinistra contenente la griglia con i libri e una sulla destra con il componente CommentArea. Entrambi dovranno essere sempre visibili. Se inizialmente nessun libro è selezionato, il CommentArea non deve mostrare alcun contenuto. Infine, rimuovi il componente CommentArea dall'interno di SingleBook.
+  selectBook = (b) => {
+    this.setState({ selectedBookAsin: b.asin });
+  };
 
   render() {
     return (
       <>
-        <Row className="justify-content-center mt-5">
-          <Col xs={12} md={4} className="text-center">
-            <Form.Group>
-              <Form.Control
-                type="search"
-                placeholder="Cerca un libro"
-                value={this.state.searchQuery}
-                onChange={(e) => this.setState({ searchQuery: e.target.value })}
-              />
-            </Form.Group>
-          </Col>
-        </Row>
-        <Row className="g-2 mt-3">
-          {this.props.books
-            .filter((b) => b.title.toLowerCase().includes(this.state.searchQuery))
-            .map((b) => (
-              <Col xs={12} md={4} key={b.asin}>
-                <SingleBook book={b} />
-              </Col>
-            ))}
-        </Row>
+        <Container fluid>
+          <Row>
+            {/* Colonna sinistra contenente la griglia dei libri */}
+            <Col md={8}>
+              <Row className="justify-content-center mt-5">
+                <Col xs={12} md={4} className="text-center">
+                  <Form.Group>
+                    <Form.Control
+                      type="search"
+                      placeholder="Cerca un libro"
+                      value={this.state.searchQuery}
+                      onChange={(e) => this.setState({ searchQuery: e.target.value })}
+                    />
+                  </Form.Group>
+                </Col>
+              </Row>
+              <Row xs={2} md={3} lg={4} className=" p-0 my-2">
+                {this.props.books
+                  .filter((b) => b.title.toLowerCase().includes(this.state.searchQuery))
+                  .map((b) => (
+                    <Col xs={12} md={3} key={b.asin}>
+                      <SingleBook
+                        book={b}
+                        onSelect={this.selectBook}
+                        selected={this.state.selectedBookAsin === b.asin}
+                      />
+                    </Col>
+                  ))}
+              </Row>
+            </Col>
+            {/* Colonna destra contenente il CommentArea */}
+            <Col md={4} className="sticky-top" style={{ top: "20px", maxHeight: "90vh", overflowY: "auto" }}>
+              {/* Passa l'asin del libro selezionato al CommentArea */}
+              {this.state.selectedBookAsin && <CommentArea selectedBookAsin={this.state.selectedBookAsin} />}
+            </Col>
+          </Row>
+        </Container>
       </>
     );
   }
