@@ -3,7 +3,7 @@ import { Button, Form } from "react-bootstrap";
 
 const AddComment = function (props) {
   const [comment, setComment] = useState({
-    comment: "", // Cambiato da "comment" a "text"
+    comment: "",
     rate: 1,
     elementId: props.asin,
   });
@@ -25,7 +25,7 @@ const AddComment = function (props) {
         },
       });
       if (response.ok) {
-        alert("Recensione inviata!");
+        alert("Recensione inviata!!!!!!");
         // Resettare il form
         setComment({
           comment: "",
@@ -48,7 +48,7 @@ const AddComment = function (props) {
           <Form.Control
             type="text"
             placeholder="Inserisci qui il testo"
-            value={comment.text}
+            value={comment.comment}
             onChange={(e) =>
               setComment({
                 ...comment,

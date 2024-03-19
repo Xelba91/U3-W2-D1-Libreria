@@ -49,10 +49,8 @@ const CommentArea = function (props) {
   //   }
   // }
   useEffect(() => {
-    if (props.selectedBookAsin) {
-      setIsLoading(true);
-      fetchComments();
-    }
+    setIsLoading(true);
+    fetchComments();
   }, [props.selectedBookAsin]);
 
   // componentDidMount() {
