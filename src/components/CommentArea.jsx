@@ -1,4 +1,4 @@
-import { Component, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import CommentList from "./CommentList";
 import AddComment from "./AddComment";
 import Loading from "./Loading";
@@ -51,6 +51,7 @@ const CommentArea = function (props) {
   useEffect(() => {
     setIsLoading(true);
     fetchComments();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.selectedBookAsin]);
 
   // componentDidMount() {
@@ -67,10 +68,11 @@ const CommentArea = function (props) {
     } else {
       setIsLoading(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <div className="text-center">
+    <div className="text-center commentArea">
       {isLoading && <Loading />}
       {isError && <Error />}
       {props.selectedBookAsin && <AddComment asin={props.selectedBookAsin} />}

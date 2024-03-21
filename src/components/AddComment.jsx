@@ -10,6 +10,7 @@ const AddComment = function (props) {
 
   useEffect(() => {
     setComment({ ...comment, elementId: props.asin });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.asin]);
 
   const sendComment = async (e) => {

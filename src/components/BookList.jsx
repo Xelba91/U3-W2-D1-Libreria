@@ -37,16 +37,18 @@ const BookList = function (props) {
             <Row xs={2} md={3} lg={4} className=" p-0 my-2">
               {props.books
                 .filter((b) => b.title.toLowerCase().includes(searchQuery))
-                .map((b) => (
-                  <Col xs={12} md={3} key={b.asin}>
-                    <SingleBook
-                      book={b}
-                      onSelect={selectBook}
-                      // Indica se il libro è selezionato o meno
-                      selected={selectedBookAsin === b.asin}
-                    />
-                  </Col>
-                ))}
+                .map((b) => {
+                  return (
+                    <Col xs={12} md={3} key={b.asin} data-testid="list-element">
+                      <SingleBook
+                        book={b}
+                        onSelect={selectBook}
+                        // Indica se il libro è selezionato o meno
+                        selected={selectedBookAsin === b.asin}
+                      />
+                    </Col>
+                  );
+                })}
             </Row>
           </Col>
           {/* Colonna destra per il CommentArea */}
